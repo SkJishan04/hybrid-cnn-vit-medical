@@ -60,3 +60,68 @@ def lesion_level_split(df: pd.DataFrame, val_split: float, test_split: float, se
     return train_df, val_df, test_df
 
 
+def copy_split(df: pd.DataFrame, raw_dir: Path, out_dir: Path, split_name: str):
+    missing = 0
+    rows = []
+    for _, row in df.iterrows():
+        src = find_image_path(row["image_id"], raw_dir)
+        if src is None:
+            missing += 1
+            continue
+        class_dir = out_dir / split_name / row["dx"]
+        class_dir.mkdir(parents=True, exist_ok=True)
+        dst = class_dir / f"{row['image_id']}.jpg"
+        if not dst.exists():
+            shutil.copy2(src, dst)
+        rows.append(row)
+
+    if missing:
+        print(f"  [warn] {missing} images listed in metadata but not found on disk")
+
+    split_df = pd.DataFrame(rows)
+    split_df.to_csv(out_dir / f"{split_name}_labels.csv", index=False)
+    return split_df
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="configs/config.yaml")
+    args = parser.parse_args()
+
+    cfg = load_config(args.config)
+    raw_dir = Path(cfg["data"]["raw_dir"])
+    processed_dir = Path(cfg["data"]["processed_dir"])
+    metadata_path = raw_dir / cfg["data"]["metadata_csv"]
+
+    if not metadata_path.exists():
+        raise FileNotFoundError(
+            f"Could not find {metadata_path}. Download HAM10000 first — see the "
+            f"docstring at the top of this file for the kaggle CLI command."
+        )
+
+    df = pd.read_csv(metadata_path)
+    print(f"Loaded metadata: {len(df)} images, {df['lesion_id'].nunique()} unique lesions")
+    print("Class distribution:\n", df["dx"].value_counts())
+
+    train_df, val_df, test_df = lesion_level_split(
+        df,
+        val_split=cfg["data"]["val_split"],
+        test_split=cfg["data"]["test_split"],
+        seed=cfg["data"]["seed"],
+    )
+
+    print(f"\nSplit sizes (by image, after lesion-level split):")
+    print(f"  train: {len(train_df)}  val: {len(val_df)}  test: {len(test_df)}")
+
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    for name, split_df in [("train", train_df), ("val", val_df), ("test", test_df)]:
+        print(f"\nCopying {name} split...")
+        copy_split(split_df, raw_dir, processed_dir, name)
+
+    print(f"\nDone. Processed data written to {processed_dir}/")
+    print("Folder layout: processed_dir/{train,val,test}/{class_name}/*.jpg")
+
+
+if __name__ == "__main__":
+    main()
+
