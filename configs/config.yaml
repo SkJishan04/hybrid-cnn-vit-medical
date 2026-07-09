@@ -1,0 +1,45 @@
+# Central config — every script reads from this, so hyperparameters
+# live in one place and every run is reproducible from a single file.
+
+data:
+  raw_dir: "data/raw"                # where HAM10000_images_part1/2 + metadata csv live
+  processed_dir: "data/processed"    # where train/val/test splits get written
+  metadata_csv: "HAM10000_metadata.csv"
+  image_size: 224
+  val_split: 0.15
+  test_split: 0.15
+  seed: 42
+
+classes:
+  # HAM10000's 7 diagnostic categories
+  - akiec   # Actinic keratoses / intraepithelial carcinoma
+  - bcc     # Basal cell carcinoma
+  - bkl     # Benign keratosis-like lesions
+  - df      # Dermatofibroma
+  - mel     # Melanoma
+  - nv      # Melanocytic nevi
+  - vasc    # Vascular lesions
+
+train:
+  batch_size: 32
+  num_workers: 4
+  epochs: 40
+  lr: 3e-4
+  weight_decay: 1e-4
+  warmup_epochs: 3
+  label_smoothing: 0.0   # focal loss handles imbalance instead
+  focal_gamma: 2.0
+  early_stop_patience: 8
+  mixed_precision: true
+  seed: 42
+
+model:
+  name: "resnet50"        # resnet50 | vit_small_patch16_224 | hybrid
+  pretrained: true
+  num_classes: 7
+  drop_rate: 0.2
+
+wandb:
+  project: "hybrid-cnn-vit-medical"
+  entity: null             # fill in your wandb username/team
+  mode: "online"           # set to "disabled" to run without wandb
