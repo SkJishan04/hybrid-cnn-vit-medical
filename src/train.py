@@ -109,11 +109,14 @@ def main():
         cfg["data"]["processed_dir"], classes, "val", cfg["data"]["image_size"]
     )
 
-    sampler = train_ds.make_weighted_sampler()
+    # NOTE: weighted sampler removed — combined with focal loss it was
+    # overcorrecting, tanking F1 on the majority class (nv). Focal loss
+    # alone handles the imbalance; plain shuffling works better here.
     train_loader = DataLoader(
-        train_ds, batch_size=cfg["train"]["batch_size"], sampler=sampler,
+        train_ds, batch_size=cfg["train"]["batch_size"], shuffle=True,
         num_workers=cfg["train"]["num_workers"], pin_memory=True,
     )
+    
     val_loader = DataLoader(
         val_ds, batch_size=cfg["train"]["batch_size"], shuffle=False,
         num_workers=cfg["train"]["num_workers"], pin_memory=True,
