@@ -11,6 +11,10 @@ from pathlib import Path
 
 import albumentations as A
 import cv2
+
+cv2.setNumThreads(0)  # prevents OpenCV threading from deadlocking with DataLoader workers
+
+
 import numpy as np
 import torch
 from albumentations.pytorch import ToTensorV2
