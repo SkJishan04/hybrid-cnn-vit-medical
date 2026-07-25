@@ -59,3 +59,12 @@ The dataset exhibits severe class imbalance (58× ratio between the largest and 
 Source: [Tschandl et al., 2018 — "The HAM10000 dataset"](https://doi.org/10.1038/sdata.2018.161), via [Kaggle](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000).
  
 ---
+
+## Methodology
+ 
+### Data pipeline
+ 
+- **Lesion-level train/val/test split** (70/15/15), not row-level — since multiple photos can share a `lesion_id`, a naive random split would leak the same lesion across splits and inflate validation metrics. Implemented in [`src/data/prepare_data.py`](src/data/prepare_data.py).
+- **Hair-artifact removal** via a morphological black-hat filter + inpainting (DullRazor-style), since a substantial fraction of HAM10000 images have hair overlapping the lesion — a spurious feature a CNN in particular can latch onto.
+- **Augmentation**: horizontal/vertical flip, rotation (±25°), color jitter, brightness/contrast jitter — standard dermoscopic augmentation, since lesions have no canonical orientation.
+- **Class-imbalance handling**: focal loss (γ=2.0) with inverse-frequency class weighting. (V1 additionally used a weighted random sampler — see [Findings](#findings--discussion) for why this was removed in V2.)
