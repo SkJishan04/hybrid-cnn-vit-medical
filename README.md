@@ -155,3 +155,16 @@ Negative or unexpected results are part of a complete experimental record. Repor
 - A controlled ablation baseline for evaluating the sampler's specific contribution in V2
 - Evidence that macro-AUC-ROC and macro-F1/accuracy can diverge sharply under severe imbalance, reinforcing why multiple complementary metrics (not accuracy alone) are necessary for evaluating models on imbalanced medical imaging data
 ---
+
+## Roadmap
+ 
+- [x] Data pipeline: lesion-level split, hair removal, augmentation
+- [x] ResNet50 baseline — V1 (sampler + focal loss, overcorrection identified)
+- [ ] ResNet50 baseline — V2 (focal loss only; sampler removed)
+- [ ] ViT-Small/16 baseline
+- [ ] Hybrid CNN+ViT architecture (cross-attention fusion + dual-attention gate)
+- [ ] Multi-seed runs (3–5 seeds per model) with statistical significance testing
+- [ ] Ablation studies: cross-attention on/off, fusion gate vs. fixed blend, transformer depth
+- [ ] Grad-CAM comparison across all three architectures
+- [ ] Final report / write-up
+---
