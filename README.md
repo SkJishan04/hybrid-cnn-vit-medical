@@ -219,3 +219,19 @@ python src/save_results.py --config configs/config.yaml --checkpoint checkpoints
 **Note on trained weights:** `.pt` checkpoint files are intentionally excluded from version control (see `.gitignore`) — they're large binaries best stored outside git history. Trained checkpoints for this project are archived separately; results in this README were produced from the checkpoint referenced above.
  
 ---
+
+## Citation
+ 
+If referencing the HAM10000 dataset itself:
+ 
+```bibtex
+@article{tschandl2018ham10000,
+  title={The HAM10000 dataset, a large collection of multi-source dermatoscopic images of common pigmented skin lesions},
+  author={Tschandl, Philipp and Rosendahl, Cliff and Kittler, Harald},
+  journal={Scientific Data},
+  volume={5},
+  pages={180161},
+  year={2018},
+  publisher={Nature Publishing Group}
+}
+```
