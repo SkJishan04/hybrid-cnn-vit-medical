@@ -39,3 +39,23 @@ Vision Transformers model global relationships from the first layer via self-att
 **This project's central hypothesis:** a hybrid architecture — CNN backbone for local feature extraction, feeding a lightweight transformer encoder with explicit cross-attention back to the CNN's feature maps — can outperform either architecture alone on a mid-sized medical imaging dataset, by combining local and global reasoning rather than relying on either in isolation.
  
 ---
+
+## Dataset
+ 
+**HAM10000** ("Human Against Machine with 10000 training images") — 10,015 dermoscopic images across 7 diagnostic categories:
+ 
+| Class | Full name | Count | % of dataset |
+|---|---|---:|---:|
+| `nv` | Melanocytic nevi | 6,705 | 66.9% |
+| `mel` | Melanoma | 1,113 | 11.1% |
+| `bkl` | Benign keratosis-like lesions | 1,099 | 11.0% |
+| `bcc` | Basal cell carcinoma | 514 | 5.1% |
+| `akiec` | Actinic keratoses / intraepithelial carcinoma | 327 | 3.3% |
+| `vasc` | Vascular lesions | 142 | 1.4% |
+| `df` | Dermatofibroma | 115 | 1.1% |
+ 
+The dataset exhibits severe class imbalance (58× ratio between the largest and smallest class) and contains multiple images per lesion (7,470 unique lesions across 10,015 images) — both factors that directly shaped the methodology below.
+ 
+Source: [Tschandl et al., 2018 — "The HAM10000 dataset"](https://doi.org/10.1038/sdata.2018.161), via [Kaggle](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000).
+ 
+---
