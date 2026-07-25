@@ -15,3 +15,17 @@ Convolutional Neural Networks (CNNs) excel at capturing local texture and edge i
 This repository documents the full experimental pipeline — data preparation, baseline models, the hybrid architecture, and iterative refinement — in the style of a running lab notebook. Version 1 (V1) results below surfaced an important negative finding around class-imbalance handling, which directly motivated the corrected V2 pipeline.
  
 ---
+
+## Table of Contents
+ 
+- [Motivation](#motivation)
+- [Dataset](#dataset)
+- [Methodology](#methodology)
+- [Experimental Setup](#experimental-setup)
+- [Results — V1 (ResNet50 Baseline)](#results--v1-resnet50-baseline)
+- [Findings & Discussion](#findings--discussion)
+- [Roadmap](#roadmap)
+- [Repository Structure](#repository-structure)
+- [Setup & Reproduction](#setup--reproduction)
+- [Acknowledgments](#acknowledgments)
+---
