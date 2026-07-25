@@ -240,3 +240,7 @@ If referencing the HAM10000 dataset itself:
  
 Built on top of [`timm`](https://github.com/huggingface/pytorch-image-models) for pretrained backbones, [`albumentations`](https://albumentations.ai/) for augmentation, and [Weights & Biases](https://wandb.ai/) for experiment tracking.
  
+
+## License
+ 
+MIT — see [`LICENSE`](LICENSE).
