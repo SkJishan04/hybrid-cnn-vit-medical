@@ -135,4 +135,17 @@ Full configuration: [`configs/config.yaml`](configs/config.yaml).
 - Trained checkpoint: `resnet50_best.pt` *(not version-controlled — see [Setup & Reproduction](#setup--reproduction))*
 ---
 
+## Findings & Discussion
+ 
+### A class-imbalance overcorrection
+ 
+The headline number in V1 is not the macro-F1 of 0.3525 — it's the **per-class F1 on `nv`, the majority class, collapsing to 0.0609**, while several minority classes (`vasc`: 0.484, comprising only 1.4% of the dataset) scored substantially higher. Overall test accuracy (24.3%) fell *below* the trivial baseline of always predicting the majority class (~67% accuracy), indicating the trained model performed **worse than doing nothing** on raw accuracy, despite a respectable macro-AUC-ROC of 0.867 showing the model's underlying class probabilities were still reasonably well-ranked.
+ 
+**Root cause:** V1's training pipeline applied two class-imbalance corrections simultaneously:
+1. A `WeightedRandomSampler` performing inverse-frequency sampling at the batch level (equalizing class exposure during training), and
+2. Focal loss with inverse-frequency class weighting applied a second time, in the loss computation itself.
+Applying both mechanisms compounds the correction well beyond what the data's true imbalance warrants, effectively teaching the model to *avoid* predicting the majority class rather than to weigh all classes fairly. This is a documented failure mode in imbalanced classification literature, but one that's easy to introduce by combining "standard" techniques without checking for redundancy between them.
+ 
+**Corrective action (V2):** the weighted sampler is removed; focal loss with class weighting remains as the sole imbalance-handling mechanism. This is a clean, single-variable ablation — V1 → V2 isolates the effect of the sampler in an otherwise identical pipeline, architecture, and hyperparameter set. V2 results will be added here once training completes.
+
 
