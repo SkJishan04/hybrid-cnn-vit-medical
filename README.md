@@ -98,3 +98,41 @@ Full configuration: [`configs/config.yaml`](configs/config.yaml).
  
 ---
 
+## Results — V1 (ResNet50 Baseline)
+ 
+**Test set: 1,516 held-out images (never seen during training or checkpoint selection)**
+ 
+| Metric | Value |
+|---|---:|
+| Accuracy | 0.2434 |
+| Precision (macro) | 0.3888 |
+| Recall (macro) | 0.6197 |
+| **F1 (macro)** | **0.3525** |
+| AUC-ROC (macro) | 0.8669 |
+ 
+**Per-class F1:**
+ 
+| Class | F1 Score |
+|---|---:|
+| akiec | 0.4962 |
+| bcc | 0.4825 |
+| bkl | 0.3276 |
+| df | 0.3409 |
+| mel | 0.2754 |
+| **nv** | **0.0609** |
+| vasc | 0.4839 |
+ 
+**Confusion matrix** (row-normalized — each cell shows the fraction of a true class predicted as each label):
+ 
+![V1 Confusion Matrix](results/resnet50/confusion_matrix.png)
+ 
+**Full result artifacts:**
+- [`results/resnet50/metrics.json`](results/resnet50/metrics.json) — complete numeric results, machine-readable
+- [`results/resnet50/metrics.csv`](results/resnet50/metrics.csv) — per-class table
+- [`results/resnet50/confusion_matrix.png`](results/resnet50/confusion_matrix.png) — plotted confusion matrix
+- [`results/resnet50/summary.md`](results/resnet50/summary.md) — generated summary
+- Training curves (loss, val F1, val AUC-ROC per epoch): [Weights & Biases run](https://wandb.ai/skjishan-indian-institute-of-information-technology-kalyani/hybrid-cnn-vit-medical) *(add your specific run URL here)*
+- Trained checkpoint: `resnet50_best.pt` *(not version-controlled — see [Setup & Reproduction](#setup--reproduction))*
+---
+
+
