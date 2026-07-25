@@ -194,3 +194,24 @@ hybrid-cnn-vit-medical/
 ```
  
 ---
+
+## Setup & Reproduction
+ 
+```bash
+pip install -r requirements.txt
+ 
+# 1. Download HAM10000 (requires a Kaggle API token)
+kaggle datasets download -d kmader/skin-cancer-mnist-ham10000 -p data/raw --unzip
+ 
+# 2. Lesion-level train/val/test split
+python src/data/prepare_data.py --config configs/config.yaml
+ 
+# 3. Train
+python src/train.py --config configs/config.yaml
+ 
+# 4. Evaluate on held-out test set
+python src/evaluate.py --config configs/config.yaml --checkpoint checkpoints/resnet50_best.pt
+ 
+# 5. Export report-ready results
+python src/save_results.py --config configs/config.yaml --checkpoint checkpoints/resnet50_best.pt --model_name resnet50
+```
