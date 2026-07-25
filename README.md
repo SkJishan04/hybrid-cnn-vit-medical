@@ -148,4 +148,10 @@ Applying both mechanisms compounds the correction well beyond what the data's tr
  
 **Corrective action (V2):** the weighted sampler is removed; focal loss with class weighting remains as the sole imbalance-handling mechanism. This is a clean, single-variable ablation — V1 → V2 isolates the effect of the sampler in an otherwise identical pipeline, architecture, and hyperparameter set. V2 results will be added here once training completes.
 
-
+### Why this is reported, not hidden
+ 
+Negative or unexpected results are part of a complete experimental record. Reporting V1 as-is — rather than silently discarding it — provides:
+- A concrete, empirical demonstration of an overcorrection failure mode in imbalanced multi-class classification
+- A controlled ablation baseline for evaluating the sampler's specific contribution in V2
+- Evidence that macro-AUC-ROC and macro-F1/accuracy can diverge sharply under severe imbalance, reinforcing why multiple complementary metrics (not accuracy alone) are necessary for evaluating models on imbalanced medical imaging data
+---
