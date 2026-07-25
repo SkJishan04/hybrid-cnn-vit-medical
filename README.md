@@ -215,3 +215,7 @@ python src/evaluate.py --config configs/config.yaml --checkpoint checkpoints/res
 # 5. Export report-ready results
 python src/save_results.py --config configs/config.yaml --checkpoint checkpoints/resnet50_best.pt --model_name resnet50
 ```
+
+**Note on trained weights:** `.pt` checkpoint files are intentionally excluded from version control (see `.gitignore`) — they're large binaries best stored outside git history. Trained checkpoints for this project are archived separately; results in this README were produced from the checkpoint referenced above.
+ 
+---
