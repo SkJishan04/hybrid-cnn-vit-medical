@@ -168,3 +168,29 @@ Negative or unexpected results are part of a complete experimental record. Repor
 - [ ] Grad-CAM comparison across all three architectures
 - [ ] Final report / write-up
 ---
+
+## Repository Structure
+ 
+```
+hybrid-cnn-vit-medical/
+├── configs/
+│   └── config.yaml              # single source of truth for all hyperparameters
+├── src/
+│   ├── data/
+│   │   ├── prepare_data.py      # download → lesion-level split → folder layout
+│   │   └── dataset.py           # Dataset class: hair removal, augmentation, sampling
+│   ├── models/
+│   │   └── baseline_resnet.py   # ResNet50 via timm
+│   ├── utils/
+│   │   ├── losses.py            # focal loss for class imbalance
+│   │   └── metrics.py           # accuracy/precision/recall/F1/AUC-ROC, per-class breakdown
+│   ├── train.py                 # training loop, checkpoint-resume support
+│   ├── evaluate.py              # test-set evaluation from a saved checkpoint
+│   └── save_results.py          # exports metrics.json/csv, confusion matrix image, summary.md
+├── results/
+│   └── resnet50/                # V1 results — metrics, confusion matrix, summary
+├── checkpoints/                 # trained weights (gitignored — see below)
+└── README.md
+```
+ 
+---
