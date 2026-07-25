@@ -78,3 +78,23 @@ Source: [Tschandl et al., 2018 — "The HAM10000 dataset"](https://doi.org/10.10
 | CNN+ViT Hybrid (cross-attention fusion) | Proposed architecture | ⏳ planned |
  
 ---
+
+## Experimental Setup
+ 
+| Parameter | Value |
+|---|---|
+| Backbone | ResNet50 (ImageNet-pretrained) |
+| Input resolution | 224×224 |
+| Batch size | 32 |
+| Optimizer | AdamW (lr=3e-4, weight_decay=1e-4) |
+| LR schedule | Cosine annealing |
+| Loss | Focal loss (γ=2.0), class-weighted |
+| Mixed precision | Enabled (fp16) |
+| Epochs | 40 (early stopping patience=8) |
+| Hardware | Google Colab, NVIDIA T4 |
+| Checkpoint selection | Best validation macro-F1 |
+ 
+Full configuration: [`configs/config.yaml`](configs/config.yaml).
+ 
+---
+
