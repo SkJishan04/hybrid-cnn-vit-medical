@@ -68,3 +68,13 @@ Source: [Tschandl et al., 2018 — "The HAM10000 dataset"](https://doi.org/10.10
 - **Hair-artifact removal** via a morphological black-hat filter + inpainting (DullRazor-style), since a substantial fraction of HAM10000 images have hair overlapping the lesion — a spurious feature a CNN in particular can latch onto.
 - **Augmentation**: horizontal/vertical flip, rotation (±25°), color jitter, brightness/contrast jitter — standard dermoscopic augmentation, since lesions have no canonical orientation.
 - **Class-imbalance handling**: focal loss (γ=2.0) with inverse-frequency class weighting. (V1 additionally used a weighted random sampler — see [Findings](#findings--discussion) for why this was removed in V2.)
+
+### Models under comparison
+ 
+| Model | Role | Status |
+|---|---|---|
+| ResNet50 | Pure-CNN baseline | ✅ V1 complete, V2 in progress |
+| ViT-Small/16 | Pure-transformer baseline | ⏳ planned |
+| CNN+ViT Hybrid (cross-attention fusion) | Proposed architecture | ⏳ planned |
+ 
+---
