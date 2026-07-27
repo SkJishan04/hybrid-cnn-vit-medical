@@ -160,7 +160,7 @@ Negative or unexpected results are part of a complete experimental record. Repor
  
 - [x] Data pipeline: lesion-level split, hair removal, augmentation
 - [x] ResNet50 baseline — V1 (sampler + focal loss, overcorrection identified)
-- [ ] ResNet50 baseline — V2 (focal loss only; sampler removed)
+- [x] ResNet50 baseline — V2 (focal loss only; sampler removed)
 - [ ] ViT-Small/16 baseline
 - [ ] Hybrid CNN+ViT architecture (cross-attention fusion + dual-attention gate)
 - [ ] Multi-seed runs (3–5 seeds per model) with statistical significance testing
