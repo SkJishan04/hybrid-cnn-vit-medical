@@ -171,6 +171,11 @@ Full configuration: [`configs/config.yaml`](configs/config.yaml).
 - [`results/resnet50_v2/metrics.csv`](results/resnet50_v2/metrics.csv)
 - [`results/resnet50_v2/confusion_matrix.png`](results/resnet50_v2/confusion_matrix.png)
 - [`results/resnet50_v2/summary.md`](results/resnet50_v2/summary.md)
+
+*Note: V2's test set (1,508 images) differs slightly from V1's (1,516) due to 
+intermittent file-read failures on Drive-mounted storage during evaluation — 
+see the `dataset.py` fix below. The 8-image difference (<0.5%) is not expected 
+to materially affect the comparison.*
 ---
 
 
