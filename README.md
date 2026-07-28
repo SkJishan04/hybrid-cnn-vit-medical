@@ -75,7 +75,7 @@ Source: [Tschandl et al., 2018 — "The HAM10000 dataset"](https://doi.org/10.10
  
 | Model | Role | Status |
 |---|---|---|
-| ResNet50 | Pure-CNN baseline | ✅ V1 complete, V2 in progress |
+| ResNet50 | Pure-CNN baseline | ✅ V1 complete, ✅ V2 complete |
 | ViT-Small/16 | Pure-transformer baseline | ⏳ planned |
 | CNN+ViT Hybrid (cross-attention fusion) | Proposed architecture | ⏳ planned |
  
