@@ -203,10 +203,12 @@ hybrid-cnn-vit-medical/
 │   ├── evaluate.py              # test-set evaluation from a saved checkpoint
 │   └── save_results.py          # exports metrics.json/csv, confusion matrix image, summary.md
 ├── results/
-│   └── resnet50/                # V1 results — metrics, confusion matrix, summary
+│   ├── resnet50/                 # V1 results — metrics, confusion matrix, summary
+│   └── resnet50_v2/              # V2 results — sampler removed
 ├── checkpoints/                 # trained weights (gitignored — see below)
 └── README.md
 ```
+
  
 ---
 
