@@ -87,6 +87,14 @@ class HAM10000Dataset(Dataset):
     def __getitem__(self, idx):
         img_path, label = self.samples[idx]
         image = cv2.imread(str(img_path))
+
+        if image is None:
+        # File unreadable — usually a Drive-mounted storage sync glitch
+        # (the file is listed but its bytes haven't fully synced yet),
+        # occasionally a genuinely corrupt file. Skip it rather than
+        # crashing hours into a training run; fall back to the next sample.
+            return self.__getitem__((idx + 1) % len(self.samples))
+
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         if self.use_hair_removal:
