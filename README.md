@@ -159,6 +159,8 @@ However, the fix is not uniformly positive, and two results are worth reporting 
 **2. Melanoma (`mel`) detection remains comparatively weak (F1: 0.3272).** This matters more than the raw number suggests: `mel` is the class where a missed or incorrect classification carries the highest real-world clinical cost, since melanoma is the most dangerous of the seven categories and early detection materially affects patient outcomes. The modest V1→V2 improvement (+0.0518) is welcome but insufficient — `mel` remains the second-weakest class after `df`. **Aggregate metrics improving does not, by itself, indicate the model is clinically better** if the improvement is concentrated in lower-stakes classes while the highest-stakes class lags behind. Per-class reporting (rather than accuracy or macro-F1 alone) is necessary to surface this, and is why this project reports per-class F1 throughout rather than relying on summary statistics.
 
 
+**Implication for future work:** uniform inverse-frequency correction (whether via sampling or loss weighting) treats all minority classes identically, but HAM10000's classes are not equally minority, nor equally clinically important. A more targeted approach — e.g., class-balanced loss reweighting (Cui et al., 2019) restricted to the one or two rarest classes, or a clinically-weighted loss that up-weights `mel` specifically regardless of its frequency — is a natural next refinement, and a candidate ablation once the hybrid architecture is in place.
+
 
 
 ### Why this is reported, not hidden
