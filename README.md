@@ -152,6 +152,11 @@ Applying both mechanisms compounds the correction well beyond what the data's tr
  
 Every aggregate metric improved, and the `nv` collapse identified in V1 is resolved — F1 on the majority class rose from 0.0609 to 0.4989, a roughly 8× improvement, confirming the double-correction hypothesis above. This is the clearest evidence in the project so far that class-imbalance handling techniques can interact destructively when stacked without checking for redundancy.
 
+However, the fix is not uniformly positive, and two results are worth reporting honestly rather than only highlighting the headline gains:
+ 
+**1. Performance on `df` (dermatofibroma) declined (F1: 0.3409 → 0.2462).** `df` is the rarest class in HAM10000 (115 images, 1.1% of the dataset). The weighted sampler had been artificially inflating its exposure during training; removing it means the model now sees `df` at its true, scarce natural frequency, with correspondingly less signal to learn from. This is best understood as the direct cost of the same change that fixed `nv` — the sampler was propping up tail-class recall at the expense of head-class performance, and removing it reverses that trade in both directions simultaneously.
+
+
 
 
 ### Why this is reported, not hidden
