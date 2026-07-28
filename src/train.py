@@ -45,8 +45,11 @@ def build_model(cfg: dict) -> torch.nn.Module:
             drop_rate=cfg["model"]["drop_rate"],
         )
     elif name == "vit_small_patch16_224":
-        raise NotImplementedError(
-            "ViT baseline not wired up yet — this is next on the list."
+        from models.baseline_vit import build_vit
+        return build_vit(
+            num_classes=cfg["model"]["num_classes"],
+            pretrained=cfg["model"]["pretrained"],
+            drop_rate=cfg["model"]["drop_rate"],
         )
     elif name == "hybrid":
         raise NotImplementedError(
