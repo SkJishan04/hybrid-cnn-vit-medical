@@ -137,6 +137,43 @@ Full configuration: [`configs/config.yaml`](configs/config.yaml).
 - Training curves (loss, val F1, val AUC-ROC per epoch): [Weights & Biases run](https://wandb.ai/skjishan-indian-institute-of-information-technology-kalyani/hybrid-cnn-vit-medical) *(add your specific run URL here)*
 - Trained checkpoint: `resnet50_best.pt` *(not version-controlled — see [Setup & Reproduction](#setup--reproduction))*
 ---
+## Results — V2 (ResNet50, Sampler Removed)
+ 
+**Change from V1:** the `WeightedRandomSampler` was removed from the training `DataLoader` (`shuffle=True` replacing `sampler=sampler`); focal loss with class weighting remains as the sole imbalance-handling mechanism. All other hyperparameters, architecture, data splits, and augmentation are identical to V1 — this is a controlled, single-variable ablation.
+ 
+**Test set: 1,508 held-out images**
+ 
+| Metric | V1 | V2 | Δ |
+|---|---:|---:|---:|
+| Accuracy | 0.2434 | **0.4483** | +0.2049 |
+| Precision (macro) | 0.3888 | **0.4091** | +0.0203 |
+| Recall (macro) | 0.6197 | **0.6762** | +0.0565 |
+| F1 (macro) | 0.3525 | **0.4365** | +0.0840 |
+| AUC-ROC (macro) | 0.8669 | **0.8997** | +0.0328 |
+ 
+**Per-class F1 — V1 vs. V2:**
+ 
+| Class | V1 F1 | V2 F1 | Δ |
+|---|---:|---:|---:|
+| akiec | 0.4962 | 0.4521 | −0.0441 |
+| bcc | 0.4825 | 0.5398 | +0.0573 |
+| bkl | 0.3276 | 0.4743 | +0.1467 |
+| df | 0.3409 | 0.2462 | **−0.0947** |
+| mel | 0.2754 | 0.3272 | +0.0518 |
+| **nv** | **0.0609** | **0.4989** | **+0.4380** |
+| vasc | 0.4839 | 0.5172 | +0.0333 |
+ 
+**Confusion matrix (V2):**
+ 
+![V2 Confusion Matrix](results/resnet50_v2/confusion_matrix.png)
+ 
+**Full result artifacts:**
+- [`results/resnet50_v2/metrics.json`](results/resnet50_v2/metrics.json)
+- [`results/resnet50_v2/metrics.csv`](results/resnet50_v2/metrics.csv)
+- [`results/resnet50_v2/confusion_matrix.png`](results/resnet50_v2/confusion_matrix.png)
+- [`results/resnet50_v2/summary.md`](results/resnet50_v2/summary.md)
+---
+
 
 ## Findings & Discussion
  
