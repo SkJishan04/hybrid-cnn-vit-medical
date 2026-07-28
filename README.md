@@ -148,6 +148,11 @@ Applying both mechanisms compounds the correction well beyond what the data's tr
  
 **Corrective action (V2):** the weighted sampler is removed; focal loss with class weighting remains as the sole imbalance-handling mechanism. This is a clean, single-variable ablation — V1 → V2 isolates the effect of the sampler in an otherwise identical pipeline, architecture, and hyperparameter set.
 
+### Interpreting V1 → V2: a fix, not a free lunch
+ 
+Every aggregate metric improved, and the `nv` collapse identified in V1 is resolved — F1 on the majority class rose from 0.0609 to 0.4989, a roughly 8× improvement, confirming the double-correction hypothesis above. This is the clearest evidence in the project so far that class-imbalance handling techniques can interact destructively when stacked without checking for redundancy.
+
+
 
 ### Why this is reported, not hidden
  
