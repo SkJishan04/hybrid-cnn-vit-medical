@@ -34,7 +34,7 @@ train:
   seed: 42
 
 model:
-  name: "resnet50"        # resnet50 | vit_small_patch16_224 | hybrid
+  name: "vit_small_patch16_224"        # resnet50 | vit_small_patch16_224 | hybrid
   pretrained: true
   num_classes: 7
   drop_rate: 0.2
