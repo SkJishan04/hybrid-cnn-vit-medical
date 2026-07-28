@@ -23,7 +23,6 @@ This repository documents the full experimental pipeline — data preparation, b
 - [Methodology](#methodology)
 - [Experimental Setup](#experimental-setup)
 - [Results — V1 (ResNet50 Baseline)](#results--v1-resnet50-baseline)
-- [Results — V1 (ResNet50 Baseline)](#results--v1-resnet50-baseline)
 - [Results — V2 (ResNet50, Sampler Removed)](#results--v2-resnet50-sampler-removed)
 - [Findings & Discussion](#findings--discussion)
 - [Roadmap](#roadmap)
