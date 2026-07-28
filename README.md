@@ -156,6 +156,8 @@ However, the fix is not uniformly positive, and two results are worth reporting 
  
 **1. Performance on `df` (dermatofibroma) declined (F1: 0.3409 → 0.2462).** `df` is the rarest class in HAM10000 (115 images, 1.1% of the dataset). The weighted sampler had been artificially inflating its exposure during training; removing it means the model now sees `df` at its true, scarce natural frequency, with correspondingly less signal to learn from. This is best understood as the direct cost of the same change that fixed `nv` — the sampler was propping up tail-class recall at the expense of head-class performance, and removing it reverses that trade in both directions simultaneously.
 
+**2. Melanoma (`mel`) detection remains comparatively weak (F1: 0.3272).** This matters more than the raw number suggests: `mel` is the class where a missed or incorrect classification carries the highest real-world clinical cost, since melanoma is the most dangerous of the seven categories and early detection materially affects patient outcomes. The modest V1→V2 improvement (+0.0518) is welcome but insufficient — `mel` remains the second-weakest class after `df`. **Aggregate metrics improving does not, by itself, indicate the model is clinically better** if the improvement is concentrated in lower-stakes classes while the highest-stakes class lags behind. Per-class reporting (rather than accuracy or macro-F1 alone) is necessary to surface this, and is why this project reports per-class F1 throughout rather than relying on summary statistics.
+
 
 
 
