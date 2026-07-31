@@ -215,7 +215,33 @@ to materially affect the comparison.*
 - [`results/vit/confusion_matrix.png`](results/vit/confusion_matrix.png)
 - [`results/vit/summary.md`](results/vit/summary.md)
 
-
+### CNN vs. ViT — the baseline comparison
+ 
+| Metric | ResNet50 (V2) | ViT-Small | Δ (ViT − ResNet) |
+|---|---:|---:|---:|
+| Accuracy | **0.4483** | 0.4466 | −0.0017 |
+| Precision (macro) | **0.4091** | 0.3983 | −0.0108 |
+| Recall (macro) | **0.6762** | 0.5944 | −0.0818 |
+| F1 (macro) | **0.4365** | 0.4041 | −0.0324 |
+| AUC-ROC (macro) | **0.8997** | 0.8592 | −0.0405 |
+ 
+**ResNet50 outperforms ViT-Small on every aggregate metric.** This is the expected result, not a disappointing one: it directly confirms the premise motivating this project. Vision Transformers lack the built-in locality and translation-invariance priors that convolutional architectures get for free, and typically require substantially more pretraining/fine-tuning data than ResNet-family models to compensate. With roughly 7,000 training images — a mid-sized dataset by deep learning standards — the CNN's inductive bias appears to still provide a meaningful advantage over the transformer's more data-hungry, globally-attending representation.
+ 
+**Per-class F1 — CNN vs. ViT:**
+ 
+| Class | ResNet50 (V2) | ViT-Small | Δ (ViT − ResNet) |
+|---|---:|---:|---:|
+| akiec | **0.4521** | 0.3070 | −0.1451 |
+| bcc | **0.5398** | 0.5057 | −0.0341 |
+| bkl | **0.4743** | 0.4031 | −0.0712 |
+| df | **0.2462** | 0.1711 | −0.0751 |
+| mel | 0.3272 | 0.3267 | ≈ 0.0000 |
+| nv | 0.4989 | **0.5569** | +0.0580 |
+| vasc | 0.5172 | **0.5581** | +0.0409 |
+ 
+A more specific pattern emerges at the per-class level than the aggregate numbers alone suggest: **ViT outperforms ResNet specifically on the two classes with either the most training data (`nv`) or the most visually distinct decision boundary (`vasc`), but underperforms on nearly every class in between** — most sharply on `akiec` and `df`, both comparatively data-scarce classes. This suggests ViT's global self-attention becomes advantageous once sufficient data or visual separability is available to exploit it, but its lack of local inductive bias is a specific liability precisely where training data is limited — which is the direct motivation for the hybrid architecture below: retaining CNN-style local feature extraction while adding transformer-style global context, rather than choosing one inductive bias over the other.
+ 
+---
 
 
 ## Findings & Discussion
