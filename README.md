@@ -179,6 +179,44 @@ see the `dataset.py` fix below. The 8-image difference (<0.5%) is not expected
 to materially affect the comparison.*
 ---
 
+## Results — ViT-Small Baseline
+ 
+**Architecture:** `vit_small_patch16_224`, ImageNet-pretrained, fine-tuned with an identical pipeline to ResNet50 V2 (same data splits, augmentation, focal loss, hyperparameters — only the model architecture differs). This is the second of the three planned comparison points.
+ 
+**Test set: 1,516 images**
+ 
+| Metric | Value |
+|---|---:|
+| Accuracy | 0.4466 |
+| Precision (macro) | 0.3983 |
+| Recall (macro) | 0.5944 |
+| F1 (macro) | 0.4041 |
+| AUC-ROC (macro) | 0.8592 |
+ 
+**Per-class F1:**
+ 
+| Class | F1 Score |
+|---|---:|
+| akiec | 0.3070 |
+| bcc | 0.5057 |
+| bkl | 0.4031 |
+| df | 0.1711 |
+| mel | 0.3267 |
+| nv | 0.5569 |
+| vasc | 0.5581 |
+ 
+**Confusion matrix:**
+ 
+![ViT Confusion Matrix](results/vit/confusion_matrix.png)
+ 
+**Full result artifacts:**
+- [`results/vit/metrics.json`](results/vit/metrics.json)
+- [`results/vit/metrics.csv`](results/vit/metrics.csv)
+- [`results/vit/confusion_matrix.png`](results/vit/confusion_matrix.png)
+- [`results/vit/summary.md`](results/vit/summary.md)
+
+
+
 
 ## Findings & Discussion
  
