@@ -1,0 +1,15 @@
+class,f1_score
+akiec,0.3070
+bcc,0.5057
+bkl,0.4031
+df,0.1711
+mel,0.3267
+nv,0.5569
+vasc,0.5581
+
+metric,value
+accuracy,0.4466
+precision_macro,0.3983
+recall_macro,0.5944
+f1_macro,0.4041
+auc_roc_macro,0.8592
