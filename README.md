@@ -253,6 +253,7 @@ The headline number in V1 is not the macro-F1 of 0.3525 — it's the **per-class
 **Root cause:** V1's training pipeline applied two class-imbalance corrections simultaneously:
 1. A `WeightedRandomSampler` performing inverse-frequency sampling at the batch level (equalizing class exposure during training), and
 2. Focal loss with inverse-frequency class weighting applied a second time, in the loss computation itself.
+
 Applying both mechanisms compounds the correction well beyond what the data's true imbalance warrants, effectively teaching the model to *avoid* predicting the majority class rather than to weigh all classes fairly. This is a documented failure mode in imbalanced classification literature, but one that's easy to introduce by combining "standard" techniques without checking for redundancy between them.
  
 **Corrective action (V2):** the weighted sampler is removed; focal loss with class weighting remains as the sole imbalance-handling mechanism. This is a clean, single-variable ablation — V1 → V2 isolates the effect of the sampler in an otherwise identical pipeline, architecture, and hyperparameter set.
@@ -285,7 +286,7 @@ Negative or unexpected results are part of a complete experimental record. Repor
 - [x] Data pipeline: lesion-level split, hair removal, augmentation
 - [x] ResNet50 baseline — V1 (sampler + focal loss, overcorrection identified)
 - [x] ResNet50 baseline — V2 (focal loss only; sampler removed)
-- [ ] ViT-Small/16 baseline
+- [x] ViT-Small/16 baseline
 - [ ] Hybrid CNN+ViT architecture (cross-attention fusion + dual-attention gate)
 - [ ] Multi-seed runs (3–5 seeds per model) with statistical significance testing
 - [ ] Ablation studies: cross-attention on/off, fusion gate vs. fixed blend, transformer depth
@@ -304,7 +305,8 @@ hybrid-cnn-vit-medical/
 │   │   ├── prepare_data.py      # download → lesion-level split → folder layout
 │   │   └── dataset.py           # Dataset class: hair removal, augmentation, sampling
 │   ├── models/
-│   │   └── baseline_resnet.py   # ResNet50 via timm
+│   │   ├── baseline_resnet.py   # ResNet50 via timm
+│   │   └── baseline_vit.py      # ViT-Small via timm
 │   ├── utils/
 │   │   ├── losses.py            # focal loss for class imbalance
 │   │   └── metrics.py           # accuracy/precision/recall/F1/AUC-ROC, per-class breakdown
@@ -313,11 +315,11 @@ hybrid-cnn-vit-medical/
 │   └── save_results.py          # exports metrics.json/csv, confusion matrix image, summary.md
 ├── results/
 │   ├── resnet50/                 # V1 results — metrics, confusion matrix, summary
-│   └── resnet50_v2/              # V2 results — sampler removed
+│   ├── resnet50_v2/              # V2 results — sampler removed
+│   └── vit/                      # ViT-Small baseline results
 ├── checkpoints/                 # trained weights (gitignored — see below)
 └── README.md
 ```
-
  
 ---
 
