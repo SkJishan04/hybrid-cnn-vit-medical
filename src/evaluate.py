@@ -31,6 +31,13 @@ def build_model(cfg: dict) -> torch.nn.Module:
             pretrained=False,  # loading trained weights next, no need for imagenet init
             drop_rate=cfg["model"]["drop_rate"],
         )
+    elif name == "hybrid":
+        from models.hybrid import build_hybrid
+        return build_hybrid(
+            num_classes=cfg["model"]["num_classes"],
+            pretrained=cfg["model"]["pretrained"],
+            drop_rate=cfg["model"]["drop_rate"],
+        )
     else:
         raise ValueError(f"Unknown model name: {name}")
 
